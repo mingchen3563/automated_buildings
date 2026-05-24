@@ -61,29 +61,29 @@
 		<KO>고급 조립 장치의 완전 자동화 버전입니다. 승무원 없이 기술 블록과 에너지 블록을 생산합니다. 물류 봇이 입출력을 처리합니다.</KO>
 	</t>
 
-	<!-- Auto Greenhouse — name -->
+	<!-- Auto Grow Bed — name -->
 	<t id="7800105" pid="121">
-		<EN>Auto Greenhouse</EN>
-		<CN>全自动温室</CN>
-		<JA>自動温室</JA>
-		<KO>자동 온실</KO>
-		<DE>Auto-Gewächshaus</DE>
-		<ES>Invernadero automático</ES>
-		<FR>Serre automatique</FR>
-		<IT>Serra automatica</IT>
-		<PL>Automatyczna szklarnia</PL>
-		<CS>Automatický skleník</CS>
-		<PTBR>Estufa automática</PTBR>
-		<RU>Автоматическая теплица</RU>
-		<TR>Otomatik Sera</TR>
+		<EN>Auto Grow Bed</EN>
+		<CN>全自动种植床</CN>
+		<JA>自動栽培床</JA>
+		<KO>자동 배양판</KO>
+		<DE>Auto-Hochbeet</DE>
+		<ES>Mesa de cultivo automática</ES>
+		<FR>Cultivatrice automatique</FR>
+		<IT>Orto rialzato automatico</IT>
+		<PL>Automatyczny propagator</PL>
+		<CS>Automatický záhon</CS>
+		<PTBR>Canteiro de cultivo automático</PTBR>
+		<RU>Автоматический рассадник</RU>
+		<TR>Otomatik Yetiştirme Yatağı</TR>
 	</t>
 
-	<!-- Auto Greenhouse — description -->
+	<!-- Auto Grow Bed — description -->
 	<t id="7800106" pid="121">
-		<EN>Fully automated algae greenhouse. Consumes water and bio matter, produces algae food without a crew operator. Logistic bots haul inputs in and food out.</EN>
-		<CN>全自动藻类温室，消耗水和生物质生产藻类食物，无需机组人员操作。物流机器人会自动搬运原料和成品。</CN>
-		<JA>完全自動化されたアルジータンク。水とバイオマターを消費してアルジー食品を生産します。クルー不要。</JA>
-		<KO>완전 자동화된 조류 온실. 물과 바이오 물질을 소비하여 조류 식품을 생산합니다. 승무원 없이 운영됩니다.</KO>
+		<EN>Fully automated grow bed. Consumes water and bio matter, produces a mix of root vegetables, fruits, grains, and nuts without a crew operator. Logistic bots haul inputs in and food out. Place several in a row for a steady food pipeline.</EN>
+		<CN>全自动种植床，消耗水和生物质，自动生产根菜、水果、谷物和坚果等多种食物，无需机组人员操作。物流机器人会自动搬运原料和成品。可以并排放置多个来稳定供应食物。</CN>
+		<JA>完全自動化された栽培床。水とバイオマターを消費して、根菜、果物、穀物、ナッツなど多種類の食品を生産します。クルー不要。複数並べて配置すると安定した食料供給が可能です。</JA>
+		<KO>완전 자동화된 배양판. 물과 바이오 물질을 소비하여 뿌리채소, 과일, 곡물, 견과류 등 다양한 식품을 생산합니다. 승무원 없이 운영됩니다.</KO>
 	</t>
 
 </t>

@@ -2,13 +2,13 @@
 
 Three new passive production modules for [Space Haven](https://store.steampowered.com/app/979110/). Drop materials in, output comes out — no crew operator needed. Logistic bots haul I/O.
 
-## Modules (v0.2.0)
+## Modules (v0.3.0)
 
-| Module | mid | Output | Vanilla recipe | Footprint | Cloned from |
+| Module | mid | Output | Recipe | Footprint | Cloned from |
 |---|---|---|---|---|---|
-| **Auto Optronics Fabricator** | 7800001 | Optronic components / Energy Cells | recipe 1939 | 4×1 + 1×1 | Optronics Fabricator (mid 1989) |
-| **Auto Advanced Assembler** | 7800002 | Tech blocks / Energy blocks | recipe 1937 | 3×1 | Advanced Assembler (mid 2002) |
-| **Auto Greenhouse** | 7800003 | Algae food | recipe 2651 | 1×1 | Algae Kitchen (mid 2643) |
+| **Auto Optronics Fabricator** | 7800001 | Optronic components / Energy Cells | recipe 1939 (vanilla) | 4×1 + 1×1 | Optronics Fabricator (mid 1989) |
+| **Auto Advanced Assembler** | 7800002 | Tech blocks / Energy blocks | recipe 1937 (vanilla) | 3×1 | Advanced Assembler (mid 2002) |
+| **Auto Grow Bed** | 7800003 | Root vegetables, fruits, grains, nuts | recipe 7800200 (new, multi-output) | 1×1 | Grow Bed (mid 160) |
 
 Each module is the fully-automated variant of the vanilla counterpart: same recipe, same sprite, same shape — but the functional inner element has `<stateWatchdog autoproduce="true"/>` and `produceInNormal="true"`. The dock runs without a crew operator. Logistic bots haul `<needs>` items in and `<products>` items out automatically.
 
@@ -49,7 +49,7 @@ Then launch `spacehaven-modloader`, enable **Automated Buildings**, and apply.
 
 - Auto Optronics Fabricator → **RESOURCE** subcategory
 - Auto Advanced Assembler → **RESOURCE** subcategory
-- Auto Greenhouse → **FOOD** subcategory
+- Auto Grow Bed → **FOOD** subcategory
 
 ## How it works
 
@@ -80,6 +80,11 @@ automated_buildings/
 ```
 
 ## Changelog
+
+### v0.3.0
+- Replaced Auto Greenhouse (algae vat) with **Auto Grow Bed** — clones the vanilla Grow Bed (mid 160) visual so it looks like a planted tile.
+- New mod-defined recipe `eid=7800200` produces a mix of **root vegetables, fruits, grains, and nuts** from water + bio matter, non-interactive so it runs without crew.
+- Note: vanilla's plant/tend/harvest cycle on Grow Beds is hardcoded in Java (`WorldObject$GrowPlace`, `Stations$FarmingStation`). We can't trigger it from XML alone, so Auto Grow Bed uses a passive `<produces>` recipe instead — same engine path the Algae Kitchen uses. Visually a grow bed, functionally a food generator.
 
 ### v0.2.0
 - Replaced the experimental Auto-Builder and Auto-Fab with proper multi-tile **Auto Optronics Fabricator** (mid 7800001) and **Auto Advanced Assembler** (mid 7800002) cloning the actual vanilla composites.

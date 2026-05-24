@@ -21,6 +21,31 @@
 		Text IDs 7800101-7800106 are defined in library/texts_automated_buildings.xml.
 	-->
 
+	<Product>
+		<!-- ============================================================
+		     Auto Grow Bed mixed-crop recipe (eid 7800200)
+		     Consumes water + bio matter, produces a steady mix of:
+		       - Root vegetables (element 15)
+		       - Fruits (element 706)
+		       - Grains (element 3378)
+		       - Nuts and seeds (element 2657)
+		     Non-interactive Process so the Auto Grow Bed runs without crew.
+		     ============================================================ -->
+		<product eid="7800200" type="Process" interactive="false" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+			<needs>
+				<l element="16" howMuch="1" consumeEvery="10"/>
+				<l element="71" howMuch="1" consumeEvery="30"/>
+			</needs>
+			<products>
+				<l element="15" howMuch="1" produceEvery="40"/>
+				<l element="706" howMuch="1" produceEvery="60"/>
+				<l element="3378" howMuch="1" produceEvery="50"/>
+				<l element="2657" howMuch="1" produceEvery="80"/>
+			</products>
+			<desc/>
+		</product>
+	</Product>
+
 	<Element>
 
 		<!-- ============================================================
@@ -206,45 +231,86 @@
 		</me>
 
 		<!-- ============================================================
-		     Auto Greenhouse (mid 7800003)
-		     Unchanged from v0.1.0 except updated name/desc tids.
+		     Auto Grow Bed (mid 7800003)
+		     Clones the vanilla Grow Bed (mid 160) visual — the planted-
+		     tile look the user wanted — and adds a passive <produces>
+		     recipe on the side so food appears automatically without
+		     the vanilla plant/tend/harvest crew loop (that loop is
+		     hardcoded in Java, can't be triggered from XML).
+
+		     Single-tile placeable. Players can put multiple in a row.
+		     Uses new recipe 7800200 (water + bio matter →
+		     root veg / fruits / grains / nuts). Non-interactive so the
+		     production runs without crew.
 		     ============================================================ -->
-		<me mid="7800003" ec="1" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
+		<me mid="7800003" ec="3" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
 			<data>
 				<l type="Object" eid="1" gridOffX="0" gridOffY="0" layer="0">
-					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="High">
+					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="Medium">
 						<definedStates>
-							<l state="Standby" playAnimation="true">
-								<r0 aid="algaeKitchen1F3" flx="false"/>
-								<r90 aid="algaeKitchen1F1" flx="false"/>
-								<r180 aid="algaeKitchen1B7" flx="false"/>
-								<r270 aid="algaeKitchen1B9" flx="false"/>
+							<l state="Standby" playAnimation="false">
+								<r0 aid="farm1" flx="false"/>
+								<r90 aid="null" flx="false"/>
+								<r180 aid="farm1" flx="false"/>
+								<r270 aid="null" flx="false"/>
+							</l>
+							<l state="InUse" playAnimation="true">
+								<r0 aid="farm1" flx="false"/>
+								<r90 aid="null" flx="false"/>
+								<r180 aid="farm1" flx="false"/>
+								<r270 aid="null" flx="false"/>
 							</l>
 						</definedStates>
 						<additionaFullLit x="0" y="0" mirX="0" mirY="0" atNoPower="false" atStandby="true" atInuse="true">
-							<r0 aid="algaeKitchenLight3" flx="false"/>
-							<r90 aid="algaeKitchenLight1" flx="false"/>
-							<r180 aid="null" flx="false"/>
+							<r0 aid="farm1Lights1B2" flx="false"/>
+							<r90 aid="null" flx="false"/>
+							<r180 aid="farm1Lights1B2" flx="false"/>
 							<r270 aid="null" flx="false"/>
 						</additionaFullLit>
 						<features addFacilityIcons="false" noPressureDmg="false" normalState="true" produceInNormal="true" inUseState="true">
 							<produces>
-								<l valuePerSec="20" product="2651" basicPowerUsage="2.0" useHighCapPowerPerSec="5.0" powerCategory="Facilities" suction="false"/>
+								<l valuePerSec="10" product="7800200" basicPowerUsage="1.0" useHighCapPowerPerSec="5.0" powerCategory="Facilities" suction="false"/>
 							</produces>
 							<stateWatchdog autoproduce="true"/>
 							<environment repairBlockFail="0.1" coldOffTempC="-100" coldSlowTempC="0" hotSlowTempC="60" hotOffTempC="200" coldTempSlowdown="0.8" hotTempSlowdown="1.0" cyclesForDmg="100" cyclesDmgChance="0.0" hazTimeDmg="360" hazDmgChance="0.0" waterTimeDmg="360" waterDmgChance="0.0" tempTimeDmg="360" tempDmgChance="0.1"/>
 							<noiseAndComfort onlyWhenInuse="false" category="ObjectId">
-								<noise ignoreZoomLevel="false" noise="10.0">
-									<audio auid="4413"/>
-								</noise>
-								<radiusBeauty roomDrop="20" work="0" sleep="-20" leisure="0" radius="6"/>
+								<radiusBeauty roomDrop="10" work="0" sleep="-10" leisure="-5" radius="6"/>
 							</noiseAndComfort>
 						</features>
-						<boxHatch x="15" y="0" boxX="15" boxY="0" in="true" out="true" flipR90="true" type2="false" wallHatch="false">
+						<boxHatch x="13" y="2" boxX="13" boxY="2" in="true" out="true" flipR90="false" type2="false" wallHatch="false">
 							<activate activateOffX="0" activateOffY="-1"/>
-							<r90Pos x="-21" y="1" boxX="-21" boxY="1"/>
 						</boxHatch>
 						<commonPower powerCategory="Facilities"/>
+					</element>
+				</l>
+				<l type="Object" eid="2" gridOffX="0" gridOffY="0" layer="0">
+					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="Medium">
+						<definedStates>
+							<l state="Standby" playAnimation="false">
+								<r0 aid="farm1Top2" flx="false"/>
+								<r90 aid="null" flx="false"/>
+								<r180 aid="farm1Top2" flx="false"/>
+								<r270 aid="null" flx="false"/>
+							</l>
+						</definedStates>
+						<additionaFullLit x="0" y="0" mirX="0" mirY="0" atNoPower="false" atStandby="true" atInuse="true">
+							<r0 aid="farm1Top2Lights" flx="false"/>
+							<r90 aid="null" flx="false"/>
+							<r180 aid="farm1Top2Lights" flx="false"/>
+							<r270 aid="null" flx="false"/>
+						</additionaFullLit>
+					</element>
+				</l>
+				<l type="Light" eid="3" gridOffX="0" gridOffY="0" layer="0">
+					<element id="0" playAnimation="false" walkGridCost="0" lightValue="None">
+						<definedStates>
+							<l state="Standby">
+								<light skipCenter="false" powerTier="Decorative" color="736223ff">
+									<second color="3f3614ff" ratio="0.25" dimming="40"/>
+									<flood distance="3" brightness="300"/>
+								</light>
+							</l>
+						</definedStates>
 					</element>
 				</l>
 			</data>
@@ -253,17 +319,17 @@
 			<objectInfo placeInMenu="62" disableRotation="false" disableBuildTest="false" buildInstant="false" disableAirlockTest="false" debugOnly="false" canDismantleOnly="false" randomRot="false" viewMode="Normal" systemPoints="0" canBuildAt="All" outdoorObject="false" indoorObject="true">
 				<cu>
 					<groups>
-						<l rep="875" buildTools="30">
+						<l rep="875" buildTools="20">
 							<customPrice>
-								<l elementId="162" howMuch="3"/>
-								<l elementId="930" howMuch="3"/>
+								<l elementId="162" howMuch="2"/>
+								<l elementId="930" howMuch="2"/>
 							</customPrice>
 						</l>
 					</groups>
 				</cu>
 				<name tid="7800105"/>
 				<desc tid="7800106"/>
-				<guiIcon aid="build_icon_2643"/>
+				<guiIcon aid="build_icon_185"/>
 				<subCat id="1515"/>
 				<difficultyLevel skill="Construction" level="1"/>
 				<restrictions>

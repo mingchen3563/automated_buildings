@@ -6,12 +6,12 @@
 Modules:
 - Auto Optronics Fabricator — autonomous version of the vanilla Optronics Fabricator. Produces optronic components and energy cells.
 - Auto Advanced Assembler — autonomous version of the vanilla Advanced Assembler. Produces tech blocks and energy blocks.
-- Auto Greenhouse — autonomous algae greenhouse. Consumes water and bio matter, produces food.
+- Auto Grow Bed — autonomous grow bed. Consumes water and bio matter, produces a mix of root vegetables, fruits, grains, and nuts.
 
 All three use the vanilla `<produces>` + `<stateWatchdog autoproduce="true">` pattern. No Java, no AI — just data. Names localized for EN + CN; other languages fall back to EN.]]>
 	</description>
 	<minimumLoaderVersion>0.12.1</minimumLoaderVersion>
-	<version>0.2.0</version>
+	<version>0.3.0</version>
 	<author>mingc</author>
 	<modid>7800001</modid>
 	<config></config>
