@@ -23,25 +23,83 @@
 
 	<Product>
 		<!-- ============================================================
-		     Auto Grow Bed mixed-crop recipe (eid 7800200)
-		     Consumes water + bio matter, produces a steady mix of:
-		       - Root vegetables (element 15)
-		       - Fruits (element 706)
-		       - Grains (element 3378)
-		       - Nuts and seeds (element 2657)
-		     Non-interactive Process so the Auto Grow Bed runs without crew.
+		     Auto Grow Bed — interactive container recipe (eid 7800200)
+		     Player picks one of four sub-recipes at the Auto Grow Bed
+		     (same UX as vanilla Energy Refinery / Weaver / Assembler).
+		     All sub-recipes share water + fertilizer inputs; each
+		     produces a single crop type.
 		     ============================================================ -->
-		<product eid="7800200" type="Process" interactive="false" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+		<product eid="7800200" type="Process" interactive="true" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+			<needs/>
+			<products/>
+			<list>
+				<processes>
+					<l process="7800201"/>
+					<l process="7800202"/>
+					<l process="7800203"/>
+					<l process="7800204"/>
+				</processes>
+			</list>
+			<desc/>
+		</product>
+
+		<!-- Sub-recipe: Root vegetables (output element 15) -->
+		<product eid="7800201" type="Process" interactive="true" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
 			<needs>
 				<l element="16" howMuch="1" consumeEvery="10"/>
-				<l element="71" howMuch="1" consumeEvery="30"/>
+				<l element="2475" howMuch="1" consumeEvery="30"/>
 			</needs>
 			<products>
-				<l element="15" howMuch="1" produceEvery="40"/>
-				<l element="706" howMuch="1" produceEvery="60"/>
-				<l element="3378" howMuch="1" produceEvery="50"/>
-				<l element="2657" howMuch="1" produceEvery="80"/>
+				<l element="15" howMuch="1" produceEvery="25"/>
 			</products>
+			<difficulty skill="Farming" level="1">
+				<custom time="25"/>
+			</difficulty>
+			<desc/>
+		</product>
+
+		<!-- Sub-recipe: Fruits (output element 706) -->
+		<product eid="7800202" type="Process" interactive="true" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+			<needs>
+				<l element="16" howMuch="1" consumeEvery="10"/>
+				<l element="2475" howMuch="1" consumeEvery="30"/>
+			</needs>
+			<products>
+				<l element="706" howMuch="1" produceEvery="35"/>
+			</products>
+			<difficulty skill="Farming" level="2">
+				<custom time="25"/>
+			</difficulty>
+			<desc/>
+		</product>
+
+		<!-- Sub-recipe: Grains and Hops (output element 3378) -->
+		<product eid="7800203" type="Process" interactive="true" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+			<needs>
+				<l element="16" howMuch="1" consumeEvery="10"/>
+				<l element="2475" howMuch="1" consumeEvery="30"/>
+			</needs>
+			<products>
+				<l element="3378" howMuch="1" produceEvery="30"/>
+			</products>
+			<difficulty skill="Farming" level="3">
+				<custom time="25"/>
+			</difficulty>
+			<desc/>
+		</product>
+
+		<!-- Sub-recipe: Nuts and seeds (output element 2657) -->
+		<product eid="7800204" type="Process" interactive="true" startOnly="false" itemScrapper="false" smelter="false" scrapper="false" composter="false" processValue="100" customPriority="-1">
+			<needs>
+				<l element="16" howMuch="1" consumeEvery="10"/>
+				<l element="2475" howMuch="1" consumeEvery="30"/>
+			</needs>
+			<products>
+				<l element="2657" howMuch="1" produceEvery="45"/>
+			</products>
+			<difficulty skill="Farming" level="2">
+				<custom time="25"/>
+			</difficulty>
 			<desc/>
 		</product>
 	</Product>
@@ -239,9 +297,12 @@
 		     hardcoded in Java, can't be triggered from XML).
 
 		     Single-tile placeable. Players can put multiple in a row.
-		     Uses new recipe 7800200 (water + bio matter →
-		     root veg / fruits / grains / nuts). Non-interactive so the
-		     production runs without crew.
+		     Uses recipe 7800200 — an interactive container with four
+		     sub-recipes (root veg / fruits / grains / nuts). The player
+		     selects which sub-recipe to run at each bed (same UX as
+		     vanilla Energy Refinery). Inputs: water + fertilizer.
+		     autoproduce=true keeps the selected sub-recipe running
+		     without crew operation.
 		     ============================================================ -->
 		<me mid="7800003" ec="3" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
 			<data>

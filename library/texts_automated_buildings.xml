@@ -80,10 +80,10 @@
 
 	<!-- Auto Grow Bed — description -->
 	<t id="7800106" pid="121">
-		<EN>Fully automated grow bed. Consumes water and bio matter, produces a mix of root vegetables, fruits, grains, and nuts without a crew operator. Logistic bots haul inputs in and food out. Place several in a row for a steady food pipeline.</EN>
-		<CN>全自动种植床，消耗水和生物质，自动生产根菜、水果、谷物和坚果等多种食物，无需机组人员操作。物流机器人会自动搬运原料和成品。可以并排放置多个来稳定供应食物。</CN>
-		<JA>完全自動化された栽培床。水とバイオマターを消費して、根菜、果物、穀物、ナッツなど多種類の食品を生産します。クルー不要。複数並べて配置すると安定した食料供給が可能です。</JA>
-		<KO>완전 자동화된 배양판. 물과 바이오 물질을 소비하여 뿌리채소, 과일, 곡물, 견과류 등 다양한 식품을 생산합니다. 승무원 없이 운영됩니다.</KO>
+		<EN>Fully automated grow bed. Consumes water and fertilizer. Select one crop per bed: root vegetables, fruits, grains and hops, or nuts and seeds. Runs without a crew operator — logistic bots haul inputs in and food out. Place several in a row, each set to a different crop, for a balanced food pipeline.</EN>
+		<CN>全自动种植床。消耗水和肥料。每个种植床可以选择生产一种作物：根菜、水果、谷物和啤酒花、或坚果和种子。无需机组人员操作，物流机器人会自动搬运原料和成品。可以并排放置多个并分别设定不同作物，组合出均衡的食物供应链。</CN>
+		<JA>完全自動化された栽培床。水と肥料を消費します。各栽培床ごとに1つの作物を選択：根菜、果物、穀物とホップ、ナッツと種子。クルー不要で運転し、物流ボットが入出力を運搬します。複数を並べてそれぞれ別の作物に設定することでバランスの取れた食料供給が可能です。</JA>
+		<KO>완전 자동화된 배양판. 물과 비료를 소비합니다. 각 배양판마다 한 가지 작물을 선택 가능: 뿌리채소, 과일, 곡물과 홉, 또는 견과류와 씨앗. 승무원 없이 운영되며 물류 봇이 입출력을 처리합니다.</KO>
 	</t>
 
 </t>

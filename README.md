@@ -2,13 +2,15 @@
 
 Three new passive production modules for [Space Haven](https://store.steampowered.com/app/979110/). Drop materials in, output comes out — no crew operator needed. Logistic bots haul I/O.
 
-## Modules (v0.3.0)
+## Modules (v0.4.0)
 
 | Module | mid | Output | Recipe | Footprint | Cloned from |
 |---|---|---|---|---|---|
 | **Auto Optronics Fabricator** | 7800001 | Optronic components / Energy Cells | recipe 1939 (vanilla) | 4×1 + 1×1 | Optronics Fabricator (mid 1989) |
 | **Auto Advanced Assembler** | 7800002 | Tech blocks / Energy blocks | recipe 1937 (vanilla) | 3×1 | Advanced Assembler (mid 2002) |
-| **Auto Grow Bed** | 7800003 | Root vegetables, fruits, grains, nuts | recipe 7800200 (new, multi-output) | 1×1 | Grow Bed (mid 160) |
+| **Auto Grow Bed** | 7800003 | Player-selected: root vegetables, fruits, grains and hops, *or* nuts and seeds | recipe 7800200 (new, interactive container with 4 sub-recipes) | 1×1 | Grow Bed (mid 160) |
+
+**Auto Grow Bed input change in v0.4.0:** uses **water + fertilizer** (vanilla element 2475) instead of bio matter. Each bed runs ONE selected crop at a time — pick at the bed's UI just like the vanilla Energy Refinery / Weaver. Place several beds, set each to a different crop, get a diversified food pipeline.
 
 Each module is the fully-automated variant of the vanilla counterpart: same recipe, same sprite, same shape — but the functional inner element has `<stateWatchdog autoproduce="true"/>` and `produceInNormal="true"`. The dock runs without a crew operator. Logistic bots haul `<needs>` items in and `<products>` items out automatically.
 
@@ -80,6 +82,11 @@ automated_buildings/
 ```
 
 ## Changelog
+
+### v0.4.0
+- **Auto Grow Bed** now uses **water + fertilizer** (element 2475) instead of bio matter.
+- Recipe 7800200 restructured as an **interactive container** (`<list><processes>`) with four selectable sub-recipes (7800201-7800204) — one per crop type. Player picks the target output at each bed's UI, same pattern as the vanilla Energy Refinery.
+- Updated EN / CN / JA / KO descriptions.
 
 ### v0.3.0
 - Replaced Auto Greenhouse (algae vat) with **Auto Grow Bed** — clones the vanilla Grow Bed (mid 160) visual so it looks like a planted tile.
