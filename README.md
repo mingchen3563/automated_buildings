@@ -2,17 +2,23 @@
 
 Three new passive production modules for [Space Haven](https://store.steampowered.com/app/979110/). Drop materials in, output comes out — no crew operator needed. Logistic bots haul I/O.
 
-## Modules
+## Modules (v0.2.0)
 
-| Module | mid | Output | Input (vanilla recipe) | Pattern cloned from |
-|---|---|---|---|---|
-| **Auto-Builder** | 7800001 | Build Tools | recipe 1446 (element 162) | Tool Generator (mid 1448) |
-| **Auto-Fab** | 7800002 | Refined materials | recipe 1934 (weaver inputs) | Weaver (mid 1959) |
-| **Auto-Greenhouse** | 7800003 | Algae food | recipe 2651 (water + bio matter) | Algae Kitchen (mid 2643) |
+| Module | mid | Output | Vanilla recipe | Footprint | Cloned from |
+|---|---|---|---|---|---|
+| **Auto Optronics Fabricator** | 7800001 | Optronic components / Energy Cells | recipe 1939 | 4×1 + 1×1 | Optronics Fabricator (mid 1989) |
+| **Auto Advanced Assembler** | 7800002 | Tech blocks / Energy blocks | recipe 1937 | 3×1 | Advanced Assembler (mid 2002) |
+| **Auto Greenhouse** | 7800003 | Algae food | recipe 2651 | 1×1 | Algae Kitchen (mid 2643) |
 
-All three run the same way: place the module, connect it to the power grid and a logistics network, and it runs `<produces>` with `<stateWatchdog autoproduce="true"/>` — exactly the mechanism the vanilla Algae Kitchen, Tool Generator, and CO2 Scrubber already use. No Java, no AI, no AspectJ.
+Each module is the fully-automated variant of the vanilla counterpart: same recipe, same sprite, same shape — but the functional inner element has `<stateWatchdog autoproduce="true"/>` and `produceInNormal="true"`. The dock runs without a crew operator. Logistic bots haul `<needs>` items in and `<products>` items out automatically.
 
-Each module is **2× the throughput** of its vanilla counterpart and uses Industry-tier power (so they're noticeable on your grid budget but always reliable).
+Tradeoff: a higher continuous power draw than the manual versions (`basicPowerUsage` and high-cap power roughly doubled) so the convenience costs grid budget.
+
+## Localization
+
+Each module ships with new text IDs (7800101-7800106) under the vanilla "facility names" category (`pid="121"`). Names and descriptions are localized in EN + CN (Simplified, matching the vanilla CN entries). Names also have JA / KO / DE / ES / FR / IT / PL / CS / PTBR / RU / TR; missing translations fall back to EN.
+
+Vanilla supports 13 languages: EN, ES, DE, PL, KO, IT, CN, FR, CS, PTBR, RU, JA, TR. (No Traditional Chinese — the game's "CN" is Simplified.)
 
 ## Requirements
 
@@ -41,32 +47,26 @@ Then launch `spacehaven-modloader`, enable **Automated Buildings**, and apply.
 
 ## Where they appear in the build menu
 
-- Auto-Builder → **RESOURCE** subcategory
-- Auto-Fab → **RESOURCE** subcategory
-- Auto-Greenhouse → **FOOD** subcategory
+- Auto Optronics Fabricator → **RESOURCE** subcategory
+- Auto Advanced Assembler → **RESOURCE** subcategory
+- Auto Greenhouse → **FOOD** subcategory
 
 ## How it works
 
-The vanilla `<produces>` + `<stateWatchdog autoproduce="true"/>` combo is what makes a station run without a crew operator. The output rate is set by `valuePerSec` on the `<produces>` entry. Logistic bots will haul `<needs>` items into the station's input hatch and pull produced output items out — same mechanic that fills any vanilla auto-producer.
+Each module is a multi-tile composite (or single tile, for Auto Greenhouse) cloning a vanilla facility. The visual sub-tiles are reused as-is from vanilla. Only the **functional inner tile** is replaced with a new mid (7800010 for Optronics, 7800011 for Adv Assembler) which differs from vanilla only in two flags:
 
 ```xml
-<features addFacilityIcons="false" produceInNormal="true" inUseState="true">
+<features ... produceInNormal="true" ...>
     <produces>
-        <l valuePerSec="20" product="1446" basicPowerUsage="2.0"
-           useHighCapPowerPerSec="10.0" powerCategory="Industry" suction="false"/>
+        <l valuePerSec="10" product="1939" basicPowerUsage="2.0" ... />
     </produces>
     <stateWatchdog autoproduce="true"/>
 </features>
 ```
 
-`product="..."` is the eid of a vanilla `<product type="Process">` recipe in `library/haven`. The recipe defines what's consumed (`<needs>`) and what's produced (`<products>`). For v0.1.0 we reuse existing vanilla recipes; future versions will add custom recipes if we want non-vanilla outputs.
+`produceInNormal="true"` lets the facility run in the Standby state (i.e. with no crew operator). `autoproduce="true"` keeps the production tick firing on its own. Same mechanism vanilla's Algae Kitchen, CO2 Scrubber, and Tool Generator already use.
 
-## Known limitations (v0.1.0)
-
-- **Names and icons are reused from the vanilla template stations.** Auto-Builder shows up as "Tool Generator" in the UI; Auto-Fab as "Weaver"; Auto-Greenhouse as "Algae Kitchen". Future versions will add distinct names, descriptions, and icons via `library/texts_automated_buildings.xml`.
-- **Sprites are reused too.** The modules look identical to their vanilla counterparts.
-- **Auto-Fab uses the Weaver's recipe list,** which is normally crew-interactive. `autoproduce="true"` should make it run anyway (vanilla Algae Kitchen does the same), but if it doesn't trigger we'll add a non-interactive recipe variant.
-- **Phase 2 candidates:** distinct sprites + names, configurable per-instance output (so one Auto-Fab makes Electronics and another makes Materials), in-game research gating.
+The `product="..."` reference points at an existing vanilla `<product type="Process">` recipe in `library/haven`, so `<needs>` (inputs to consume) and `<products>` (outputs to emit) are inherited unchanged. Logistic bots will haul to/from these stations automatically.
 
 ## Project layout
 
@@ -74,9 +74,20 @@ The vanilla `<produces>` + `<stateWatchdog autoproduce="true"/>` combo is what m
 automated_buildings/
 ├── info.xml
 ├── library/
-│   └── haven_automated_buildings.xml
+│   ├── haven_automated_buildings.xml        # station + functional inner mids
+│   └── texts_automated_buildings.xml        # localized names + descriptions
 └── README.md
 ```
+
+## Changelog
+
+### v0.2.0
+- Replaced the experimental Auto-Builder and Auto-Fab with proper multi-tile **Auto Optronics Fabricator** (mid 7800001) and **Auto Advanced Assembler** (mid 7800002) cloning the actual vanilla composites.
+- Added new text IDs (7800101-7800106) with full EN + CN localization.
+- Auto Greenhouse now shows up under its own name instead of "Algae Kitchen".
+
+### v0.1.0
+- Initial scaffold: Auto-Builder (Tool Gen clone), Auto-Fab (Weaver clone), Auto-Greenhouse (Algae Kitchen clone). Single-tile, reused vanilla text IDs.
 
 ## License
 
@@ -84,5 +95,5 @@ MIT.
 
 ## Credits
 
-- [spacehaven-modloader](https://github.com/Spacehaven-modding-tools/spacehaven-modloader) team for the mod system.
+- [spacehaven-modloader](https://github.com/Spacehaven-modding-tools/spacehaven-modloader) team for the patch system.
 - Bugbyte for Space Haven.

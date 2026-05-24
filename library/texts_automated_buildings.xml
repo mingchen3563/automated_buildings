@@ -1,0 +1,89 @@
+<t>
+
+	<!--
+		Automated Buildings v0.2.0 — text entries for new modules.
+		IDs namespaced 7800101-7800106 (modid 7800001).
+		pid="121" matches the vanilla "facility names" category used by
+		Optronics Fabricator (1828), Advanced Assembler (1832), etc.
+
+		EN is the primary; CN (Simplified) is provided to match the
+		vanilla CN entries the user reads. Other locales fall back to EN
+		(the game uses EN when a locale is missing for a given tid).
+	-->
+
+	<!-- Auto Optronics Fabricator — name -->
+	<t id="7800101" pid="121">
+		<EN>Auto Optronics Fabricator</EN>
+		<CN>全自动光电组装机</CN>
+		<JA>自動光電子工学ファブリケイター</JA>
+		<KO>자동 광전자 제작 장치</KO>
+		<DE>Auto-Optronik-Hersteller</DE>
+		<ES>Fabricador optoelectrónico automático</ES>
+		<FR>Imprimante d'optronique automatique</FR>
+		<IT>Fabbricatore optronico automatico</IT>
+		<PL>Automatyczny fabrykator optoelektroniki</PL>
+		<CS>Automatický fabrikátor optoelektroniky</CS>
+		<PTBR>Fabricador optrônico automático</PTBR>
+		<RU>Автоматический фабрикатор оптоэлектроники</RU>
+		<TR>Otomatik Optronik Üretici</TR>
+	</t>
+
+	<!-- Auto Optronics Fabricator — description -->
+	<t id="7800102" pid="121">
+		<EN>Fully automated variant of the Optronics Fabricator. Produces optronic components and energy cells without a crew operator. Logistic bots haul inputs in and finished items out. Higher continuous power draw than the manual version.</EN>
+		<CN>光电组装机的全自动版本，无需机组人员操作，物流机器人会自动搬运原料和成品。比手动版本持续耗电更高。</CN>
+		<JA>光電子工学ファブリケーターの完全自動化バージョン。クルーの操作なしで光電子部品とエネルギーセルを生産します。物流ボットが入出力を運搬します。</JA>
+		<KO>광전자 제작 장치의 완전 자동화 버전입니다. 승무원 없이 광전자 부품과 에너지 셀을 생산합니다. 물류 봇이 입출력을 처리합니다.</KO>
+	</t>
+
+	<!-- Auto Advanced Assembler — name -->
+	<t id="7800103" pid="121">
+		<EN>Auto Advanced Assembler</EN>
+		<CN>全自动高级装配器</CN>
+		<JA>自動高度アセンブラー</JA>
+		<KO>자동 고급 조립 장치</KO>
+		<DE>Auto-Verbesserter-Zusammenfüger</DE>
+		<ES>Ensambladora avanzada automática</ES>
+		<FR>Assembleuse avancée automatique</FR>
+		<IT>Assemblatore avanzato automatico</IT>
+		<PL>Automatyczna zaawansowana montownia</PL>
+		<CS>Automatické pokročilé montážní zařízení</CS>
+		<PTBR>Montador avançado automático</PTBR>
+		<RU>Автоматическая расширенная сборочная установка</RU>
+		<TR>Otomatik Gelişmiş Birleştirici</TR>
+	</t>
+
+	<!-- Auto Advanced Assembler — description -->
+	<t id="7800104" pid="121">
+		<EN>Fully automated variant of the Advanced Assembler. Produces tech blocks and energy blocks without a crew operator. Logistic bots haul inputs in and finished items out. Higher continuous power draw than the manual version.</EN>
+		<CN>高级装配器的全自动版本，无需机组人员操作。生产科技方块和能量方块，物流机器人会自动搬运原料和成品。比手动版本持续耗电更高。</CN>
+		<JA>高度アセンブラーの完全自動化バージョン。クルーの操作なしでテックブロックとエネルギーブロックを生産します。物流ボットが入出力を運搬します。</JA>
+		<KO>고급 조립 장치의 완전 자동화 버전입니다. 승무원 없이 기술 블록과 에너지 블록을 생산합니다. 물류 봇이 입출력을 처리합니다.</KO>
+	</t>
+
+	<!-- Auto Greenhouse — name -->
+	<t id="7800105" pid="121">
+		<EN>Auto Greenhouse</EN>
+		<CN>全自动温室</CN>
+		<JA>自動温室</JA>
+		<KO>자동 온실</KO>
+		<DE>Auto-Gewächshaus</DE>
+		<ES>Invernadero automático</ES>
+		<FR>Serre automatique</FR>
+		<IT>Serra automatica</IT>
+		<PL>Automatyczna szklarnia</PL>
+		<CS>Automatický skleník</CS>
+		<PTBR>Estufa automática</PTBR>
+		<RU>Автоматическая теплица</RU>
+		<TR>Otomatik Sera</TR>
+	</t>
+
+	<!-- Auto Greenhouse — description -->
+	<t id="7800106" pid="121">
+		<EN>Fully automated algae greenhouse. Consumes water and bio matter, produces algae food without a crew operator. Logistic bots haul inputs in and food out.</EN>
+		<CN>全自动藻类温室，消耗水和生物质生产藻类食物，无需机组人员操作。物流机器人会自动搬运原料和成品。</CN>
+		<JA>完全自動化されたアルジータンク。水とバイオマターを消費してアルジー食品を生産します。クルー不要。</JA>
+		<KO>완전 자동화된 조류 온실. 물과 바이오 물질을 소비하여 조류 식품을 생산합니다. 승무원 없이 운영됩니다.</KO>
+	</t>
+
+</t>
