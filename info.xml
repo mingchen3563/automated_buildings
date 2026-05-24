@@ -1,0 +1,18 @@
+<mod>
+	<name>Automated Buildings</name>
+	<description>
+		<![CDATA[Three new passive production modules that run without crew. Power and input items go in, finished output comes out. Logistic bots haul I/O automatically.
+
+Modules:
+- Auto-Builder — generates Build Tools from raw materials. A buffed, autonomous Tool Generator.
+- Auto-Fab — fabricates Construction Materials from refined ores.
+- Auto-Greenhouse — grows algae food from water and bio matter.
+
+All three use the vanilla `<produces>` + `<stateWatchdog autoproduce="true">` pattern. No Java, no AI — just data.]]>
+	</description>
+	<minimumLoaderVersion>0.12.1</minimumLoaderVersion>
+	<version>0.1.0</version>
+	<author>mingc</author>
+	<modid>7800001</modid>
+	<config></config>
+</mod>

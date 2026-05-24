@@ -1,0 +1,240 @@
+<data libVersion="1.0.2_steam_1">
+
+	<!--
+		Automated Buildings — three passive production modules.
+		IDs namespaced under 7800001-7800999 (modid 7800001).
+
+		Each module clones the vanilla pattern of a passive <produces> facility
+		with <stateWatchdog autoproduce="true"/>. Recipes reference existing
+		vanilla product IDs so we don't need to define new ones for v0.1.0.
+
+		Sprites and animations are reused from the vanilla counterparts.
+	-->
+
+	<Element>
+
+		<!-- ============================================================
+		     Auto-Builder (mid 7800001)
+		     Clone of Tool Generator (mid 1448). Produces Build Tools
+		     (element 1445) from element 162. Reuses recipe eid=1446.
+		     Doubled output rate (valuePerSec=20) and doubled capacity.
+		     ============================================================ -->
+		<me mid="7800001" ec="1" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
+			<data>
+				<l type="Object" eid="1" gridOffX="0" gridOffY="0" layer="0">
+					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="MediumPlus">
+						<definedStates>
+							<l state="Standby" playAnimation="false">
+								<r0 aid="toolGen2F3" flx="false"/>
+								<r90 aid="toolGen2F1" flx="false"/>
+								<r180 aid="toolGen2B7" flx="false"/>
+								<r270 aid="toolGen2B9" flx="false"/>
+							</l>
+							<l state="InUse" playAnimation="true">
+								<r0 aid="toolGen2F3" flx="false"/>
+								<r90 aid="toolGen2F1" flx="false"/>
+								<r180 aid="toolGen2B7" flx="false"/>
+								<r270 aid="toolGen2B9" flx="false"/>
+							</l>
+						</definedStates>
+						<additionaFullLit x="-20" y="-10" mirX="0" mirY="0" atNoPower="false" atStandby="true" atInuse="true">
+							<r0 aid="buildToolsScreen23" flx="false"/>
+							<r90 aid="buildToolsScreen21" flx="false"/>
+							<r180 aid="null" flx="false"/>
+							<r270 aid="null" flx="false"/>
+						</additionaFullLit>
+						<features addFacilityIcons="false" noPressureDmg="false" normalState="true" produceInNormal="true" inUseState="true">
+							<produces>
+								<l valuePerSec="20" product="1446" basicPowerUsage="2.0" useHighCapPowerPerSec="10.0" powerCategory="Industry" suction="false">
+									<logic resource="1445" is="LessThan" value="1000"/>
+									<heat type="HeatTo" temp="Low"/>
+								</l>
+							</produces>
+							<stateWatchdog autoproduce="true"/>
+							<buildTools capacity="1000"/>
+							<environment repairBlockFail="0.1" coldOffTempC="-100" coldSlowTempC="0" hotSlowTempC="60" hotOffTempC="200" coldTempSlowdown="0.8" hotTempSlowdown="1.0" cyclesForDmg="100" cyclesDmgChance="0.1" hazTimeDmg="360" hazDmgChance="0.5" waterTimeDmg="360" waterDmgChance="0.1" tempTimeDmg="360" tempDmgChance="0.1"/>
+							<noiseAndComfort onlyWhenInuse="false" category="ObjectId">
+								<constantSound>
+									<atStandby auid="4308"/>
+									<atInUse auid="4308"/>
+								</constantSound>
+								<radiusBeauty roomDrop="20" work="-5" sleep="-20" leisure="-10" radius="4"/>
+							</noiseAndComfort>
+						</features>
+						<boxHatch x="20" y="2" boxX="20" boxY="2" in="true" out="true" flipR90="true" type2="false" wallHatch="false">
+							<activate activateOffX="0" activateOffY="-1"/>
+							<r90Pos x="-16" y="-2" boxX="-16" boxY="-2"/>
+						</boxHatch>
+						<commonPower powerCategory="Industry"/>
+					</element>
+				</l>
+			</data>
+			<linked/>
+			<events/>
+			<objectInfo placeInMenu="50" disableRotation="false" disableBuildTest="false" buildInstant="false" disableAirlockTest="false" debugOnly="false" canDismantleOnly="false" randomRot="false" viewMode="Normal" systemPoints="0" canBuildAt="All" outdoorObject="false" indoorObject="true">
+				<cu>
+					<groups>
+						<l rep="875" buildTools="40">
+							<customPrice>
+								<l elementId="162" howMuch="4"/>
+								<l elementId="930" howMuch="4"/>
+							</customPrice>
+						</l>
+					</groups>
+				</cu>
+				<!-- Reuse Tool Generator name/desc for v0.1.0; replace with new tids later. -->
+				<name tid="908"/>
+				<desc tid="909"/>
+				<guiIcon aid="build_icon_1448"/>
+				<subCat id="1510"/>
+				<difficultyLevel skill="Construction" level="2"/>
+				<restrictions>
+					<l type="Floor" gridX="0" gridY="0" sizeX="1" sizeY="1"/>
+				</restrictions>
+			</objectInfo>
+		</me>
+
+		<!-- ============================================================
+		     Auto-Fab (mid 7800002)
+		     Clone of Weaver (mid 1959). Reuses recipe eid=1934.
+		     Produces refined materials passively at doubled rate.
+		     ============================================================ -->
+		<me mid="7800002" ec="1" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
+			<data>
+				<l type="Object" eid="1" gridOffX="0" gridOffY="0" layer="0">
+					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="High">
+						<definedStates>
+							<l state="Standby" playAnimation="false">
+								<r0 aid="weaver1f" flx="false"/>
+								<r90 aid="weaver1f" flx="false"/>
+								<r180 aid="weaver1f" flx="false"/>
+								<r270 aid="weaver1f" flx="false"/>
+							</l>
+							<l state="InUse" playAnimation="true">
+								<r0 aid="weaver1f" flx="false"/>
+								<r90 aid="weaver1f" flx="false"/>
+								<r180 aid="weaver1f" flx="false"/>
+								<r270 aid="weaver1f" flx="false"/>
+							</l>
+						</definedStates>
+						<features addFacilityIcons="false" noPressureDmg="false" normalState="true" produceInNormal="true" inUseState="true">
+							<produces>
+								<l valuePerSec="20" product="1934" basicPowerUsage="2.0" useHighCapPowerPerSec="40.0" powerCategory="Industry" suction="false">
+									<heat type="HeatTo" temp="Low"/>
+								</l>
+							</produces>
+							<stateWatchdog autoproduce="true"/>
+							<environment repairBlockFail="0.1" coldOffTempC="-100" coldSlowTempC="0" hotSlowTempC="60" hotOffTempC="200" coldTempSlowdown="0.8" hotTempSlowdown="1.0" cyclesForDmg="100" cyclesDmgChance="0.1" hazTimeDmg="360" hazDmgChance="0.5" waterTimeDmg="360" waterDmgChance="0.1" tempTimeDmg="360" tempDmgChance="0.1"/>
+							<noiseAndComfort onlyWhenInuse="false" category="ObjectId">
+								<constantSound>
+									<atStandby auid="4308"/>
+									<atInUse auid="4310"/>
+								</constantSound>
+								<radiusBeauty roomDrop="40" work="-8" sleep="-25" leisure="-12" radius="10"/>
+							</noiseAndComfort>
+						</features>
+						<boxHatch x="20" y="2" boxX="20" boxY="2" in="true" out="true" flipR90="true" type2="false" wallHatch="false">
+							<activate activateOffX="0" activateOffY="-1"/>
+							<r90Pos x="-16" y="-2" boxX="-16" boxY="-2"/>
+						</boxHatch>
+						<commonPower powerCategory="Industry"/>
+					</element>
+				</l>
+			</data>
+			<linked/>
+			<events/>
+			<objectInfo placeInMenu="51" disableRotation="false" disableBuildTest="false" buildInstant="false" disableAirlockTest="false" debugOnly="false" canDismantleOnly="false" randomRot="false" viewMode="Normal" systemPoints="0" canBuildAt="All" outdoorObject="false" indoorObject="true">
+				<cu>
+					<groups>
+						<l rep="875" buildTools="40">
+							<customPrice>
+								<l elementId="162" howMuch="4"/>
+								<l elementId="930" howMuch="4"/>
+							</customPrice>
+						</l>
+					</groups>
+				</cu>
+				<!-- Reuse Weaver name/desc for v0.1.0. -->
+				<name tid="1781"/>
+				<desc tid="1782"/>
+				<guiIcon aid="build_icon_1959"/>
+				<subCat id="1510"/>
+				<difficultyLevel skill="Construction" level="2"/>
+				<restrictions>
+					<l type="Floor" gridX="0" gridY="0" sizeX="1" sizeY="1"/>
+				</restrictions>
+			</objectInfo>
+		</me>
+
+		<!-- ============================================================
+		     Auto-Greenhouse (mid 7800003)
+		     Clone of Algae Kitchen (mid 2643). Reuses recipe eid=2651.
+		     Produces algae food (element 179) passively.
+		     ============================================================ -->
+		<me mid="7800003" ec="1" costGroup="0" offsetRot="R0" nonSymmetrical="false" alternateY="false">
+			<data>
+				<l type="Object" eid="1" gridOffX="0" gridOffY="0" layer="0">
+					<element id="0" renderOnFloor="false" renderOnFloorPartially="false" noMoveDismantle="false" cannotBeSelected="false" walkGridCost="255" lightValue="High">
+						<definedStates>
+							<l state="Standby" playAnimation="true">
+								<r0 aid="algaeKitchen1F3" flx="false"/>
+								<r90 aid="algaeKitchen1F1" flx="false"/>
+								<r180 aid="algaeKitchen1B7" flx="false"/>
+								<r270 aid="algaeKitchen1B9" flx="false"/>
+							</l>
+						</definedStates>
+						<additionaFullLit x="0" y="0" mirX="0" mirY="0" atNoPower="false" atStandby="true" atInuse="true">
+							<r0 aid="algaeKitchenLight3" flx="false"/>
+							<r90 aid="algaeKitchenLight1" flx="false"/>
+							<r180 aid="null" flx="false"/>
+							<r270 aid="null" flx="false"/>
+						</additionaFullLit>
+						<features addFacilityIcons="false" noPressureDmg="false" normalState="true" produceInNormal="true" inUseState="true">
+							<produces>
+								<l valuePerSec="20" product="2651" basicPowerUsage="2.0" useHighCapPowerPerSec="5.0" powerCategory="Facilities" suction="false"/>
+							</produces>
+							<stateWatchdog autoproduce="true"/>
+							<environment repairBlockFail="0.1" coldOffTempC="-100" coldSlowTempC="0" hotSlowTempC="60" hotOffTempC="200" coldTempSlowdown="0.8" hotTempSlowdown="1.0" cyclesForDmg="100" cyclesDmgChance="0.0" hazTimeDmg="360" hazDmgChance="0.0" waterTimeDmg="360" waterDmgChance="0.0" tempTimeDmg="360" tempDmgChance="0.1"/>
+							<noiseAndComfort onlyWhenInuse="false" category="ObjectId">
+								<noise ignoreZoomLevel="false" noise="10.0">
+									<audio auid="4413"/>
+								</noise>
+								<radiusBeauty roomDrop="20" work="0" sleep="-20" leisure="0" radius="6"/>
+							</noiseAndComfort>
+						</features>
+						<boxHatch x="15" y="0" boxX="15" boxY="0" in="true" out="true" flipR90="true" type2="false" wallHatch="false">
+							<activate activateOffX="0" activateOffY="-1"/>
+							<r90Pos x="-21" y="1" boxX="-21" boxY="1"/>
+						</boxHatch>
+						<commonPower powerCategory="Facilities"/>
+					</element>
+				</l>
+			</data>
+			<linked/>
+			<events/>
+			<objectInfo placeInMenu="52" disableRotation="false" disableBuildTest="false" buildInstant="false" disableAirlockTest="false" debugOnly="false" canDismantleOnly="false" randomRot="false" viewMode="Normal" systemPoints="0" canBuildAt="All" outdoorObject="false" indoorObject="true">
+				<cu>
+					<groups>
+						<l rep="875" buildTools="30">
+							<customPrice>
+								<l elementId="162" howMuch="3"/>
+								<l elementId="930" howMuch="3"/>
+							</customPrice>
+						</l>
+					</groups>
+				</cu>
+				<!-- Reuse Algae Kitchen name/desc for v0.1.0. -->
+				<name tid="2167"/>
+				<desc tid="2168"/>
+				<guiIcon aid="build_icon_2643"/>
+				<subCat id="1515"/>
+				<difficultyLevel skill="Construction" level="1"/>
+				<restrictions>
+					<l type="Floor" gridX="0" gridY="0" sizeX="1" sizeY="1"/>
+				</restrictions>
+			</objectInfo>
+		</me>
+
+	</Element>
+
+</data>
