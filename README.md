@@ -1,111 +1,57 @@
-# Automated Buildings
+# Automated Buildings — post-mortem
 
-Three new passive production modules for [Space Haven](https://store.steampowered.com/app/979110/). Drop materials in, output comes out — no crew operator needed. Logistic bots haul I/O.
+> **Status: abandoned at v0.5.0.** All modules removed. Repo retained as a documented negative result.
 
-## Modules (v0.4.0)
+## What this mod tried to do
 
-| Module | mid | Output | Recipe | Footprint | Cloned from |
-|---|---|---|---|---|---|
-| **Auto Optronics Fabricator** | 7800001 | Optronic components / Energy Cells | recipe 1939 (vanilla) | 4×1 + 1×1 | Optronics Fabricator (mid 1989) |
-| **Auto Advanced Assembler** | 7800002 | Tech blocks / Energy blocks | recipe 1937 (vanilla) | 3×1 | Advanced Assembler (mid 2002) |
-| **Auto Grow Bed** | 7800003 | Player-selected: root vegetables, fruits, grains and hops, *or* nuts and seeds | recipe 7800200 (new, interactive container with 4 sub-recipes) | 1×1 | Grow Bed (mid 160) |
+Add three player-buildable "automated" versions of vanilla Space Haven facilities that normally require crew operation:
 
-**Auto Grow Bed input change in v0.4.0:** uses **water + fertilizer** (vanilla element 2475) instead of bio matter. Each bed runs ONE selected crop at a time — pick at the bed's UI just like the vanilla Energy Refinery / Weaver. Place several beds, set each to a different crop, get a diversified food pipeline.
+- **Auto Optronics Fabricator** — clone of the vanilla Optronics Fabricator (mid 1989).
+- **Auto Advanced Assembler** — clone of the vanilla Advanced Assembler (mid 2002).
+- **Auto Grow Bed** — clone of the vanilla Grow Bed (mid 160), with a new selectable-output recipe (water + fertilizer → root vegetables / fruits / grains / nuts).
 
-Each module is the fully-automated variant of the vanilla counterpart: same recipe, same sprite, same shape — but the functional inner element has `<stateWatchdog autoproduce="true"/>` and `produceInNormal="true"`. The dock runs without a crew operator. Logistic bots haul `<needs>` items in and `<products>` items out automatically.
+The plan was to set `<stateWatchdog autoproduce="true"/>` and `produceInNormal="true"` on cloned functional inner elements, expecting them to run without a crew operator the way vanilla Algae Kitchen, CO2 Scrubber, and Tool Generator do.
 
-Tradeoff: a higher continuous power draw than the manual versions (`basicPowerUsage` and high-cap power roughly doubled) so the convenience costs grid budget.
+## What actually happens
 
-## Localization
+**Nothing.** Built stations sit idle. The `<produces>` tick never fires, no inputs are consumed, no outputs appear. Logistic bots don't haul materials because the station never registers a demand.
 
-Each module ships with new text IDs (7800101-7800106) under the vanilla "facility names" category (`pid="121"`). Names and descriptions are localized in EN + CN (Simplified, matching the vanilla CN entries). Names also have JA / KO / DE / ES / FR / IT / PL / CS / PTBR / RU / TR; missing translations fall back to EN.
+We verified the patches *did* land — the modloader merged the library file successfully, and the in-game library XML reflected the new mids with `autoproduce="true"`. The engine just refused to run the production cycle.
 
-Vanilla supports 13 languages: EN, ES, DE, PL, KO, IT, CN, FR, CS, PTBR, RU, JA, TR. (No Traditional Chinese — the game's "CN" is Simplified.)
+## Why
 
-## Requirements
+Vanilla Space Haven has two distinct classes of `<produces>` facility:
 
-- **Space Haven** v1.0.2
-- **[spacehaven-modloader](https://github.com/Spacehaven-modding-tools/spacehaven-modloader)** v0.12.1 or newer
+| Class | Examples | Behavior without crew |
+|---|---|---|
+| **Passive** | Algae Kitchen, CO2 Scrubber, Tool Generator, Water Purifier | Production tick runs autonomously. `autoproduce="true"` actually means something. |
+| **Crew-gated** | Optronics Fabricator, Advanced Assembler, Material Fab, Greenhouse Grow Bed | Production tick is gated on a Java-side check that requires a crew member to be in the `StandWork` task at the facility. `autoproduce="true"` has no effect. |
 
-## Install
+The gating lives in compiled Java classes — `Stations$FarmingStation`, `Production$FoodCrop`, the AdvancedAssembler/OptronicFab work loops in `WorldObjectHelper`. There is **no XML attribute that flips a crew-gated facility into the passive class**. The two classes look identical in the data files; the difference is purely in code.
 
-Clone into the game's mods folder, or junction your dev workspace in:
+We also tried:
+- `produceInNormal="true"` on the functional inner element. No effect on crew-gated facilities.
+- Removing the `<tasks>` block (the crew task definition). The facility wouldn't render correctly and still didn't produce.
+- An interactive container recipe with `<list><processes>` and sub-recipes (vanilla Energy Refinery pattern). Selectable-output worked at the data layer, but the crew gate still applied.
+- For the Grow Bed: the planting loop runs in `WorldObject$GrowPlace` / `Stations$FarmingStation` and is entirely crew-driven. Even adding a passive `<produces>` recipe on top of the grow tile didn't bypass the gate.
 
-```powershell
-cd "<SpaceHaven>\mods"
-git clone https://github.com/mingchen3563/automated_buildings.git
-```
+## What would actually work
 
-Or for development:
+Same conclusion drones_plus Phase 2 reached: **AspectJ code injection.** Write a Java aspect that intercepts the work-loop check in `Stations$FarmingStation`/Production work classes and treats the new mids as passive (skip the crew check, advance the production tick on its own).
 
-```powershell
-git clone https://github.com/mingchen3563/automated_buildings.git C:\path\to\workspace
-cmd /c 'mklink /J "<SpaceHaven>\mods\automated_buildings" "C:\path\to\workspace"'
-```
+That's a multi-week reverse-engineering project per facility class. Out of scope here.
 
-Then launch `spacehaven-modloader`, enable **Automated Buildings**, and apply.
+## What's left in this repo
 
-> ⚠ **Do not put the mod folder under the Steam Workshop directory** (`steamapps/workshop/content/979110/`). Steam re-validates that folder and deletes anything that isn't a registered workshop item.
+- `info.xml` — empty mod metadata (so the modloader doesn't error if you have the junction still in place).
+- `README.md` — this post-mortem.
 
-## Where they appear in the build menu
+Git history preserves the v0.1.0 - v0.4.0 attempts so future modders can see exactly which XML approaches were tried and ruled out.
 
-- Auto Optronics Fabricator → **RESOURCE** subcategory
-- Auto Advanced Assembler → **RESOURCE** subcategory
-- Auto Grow Bed → **FOOD** subcategory
+## Sibling project
 
-## How it works
-
-Each module is a multi-tile composite (or single tile, for Auto Greenhouse) cloning a vanilla facility. The visual sub-tiles are reused as-is from vanilla. Only the **functional inner tile** is replaced with a new mid (7800010 for Optronics, 7800011 for Adv Assembler) which differs from vanilla only in two flags:
-
-```xml
-<features ... produceInNormal="true" ...>
-    <produces>
-        <l valuePerSec="10" product="1939" basicPowerUsage="2.0" ... />
-    </produces>
-    <stateWatchdog autoproduce="true"/>
-</features>
-```
-
-`produceInNormal="true"` lets the facility run in the Standby state (i.e. with no crew operator). `autoproduce="true"` keeps the production tick firing on its own. Same mechanism vanilla's Algae Kitchen, CO2 Scrubber, and Tool Generator already use.
-
-The `product="..."` reference points at an existing vanilla `<product type="Process">` recipe in `library/haven`, so `<needs>` (inputs to consume) and `<products>` (outputs to emit) are inherited unchanged. Logistic bots will haul to/from these stations automatically.
-
-## Project layout
-
-```
-automated_buildings/
-├── info.xml
-├── library/
-│   ├── haven_automated_buildings.xml        # station + functional inner mids
-│   └── texts_automated_buildings.xml        # localized names + descriptions
-└── README.md
-```
-
-## Changelog
-
-### v0.4.0
-- **Auto Grow Bed** now uses **water + fertilizer** (element 2475) instead of bio matter.
-- Recipe 7800200 restructured as an **interactive container** (`<list><processes>`) with four selectable sub-recipes (7800201-7800204) — one per crop type. Player picks the target output at each bed's UI, same pattern as the vanilla Energy Refinery.
-- Updated EN / CN / JA / KO descriptions.
-
-### v0.3.0
-- Replaced Auto Greenhouse (algae vat) with **Auto Grow Bed** — clones the vanilla Grow Bed (mid 160) visual so it looks like a planted tile.
-- New mod-defined recipe `eid=7800200` produces a mix of **root vegetables, fruits, grains, and nuts** from water + bio matter, non-interactive so it runs without crew.
-- Note: vanilla's plant/tend/harvest cycle on Grow Beds is hardcoded in Java (`WorldObject$GrowPlace`, `Stations$FarmingStation`). We can't trigger it from XML alone, so Auto Grow Bed uses a passive `<produces>` recipe instead — same engine path the Algae Kitchen uses. Visually a grow bed, functionally a food generator.
-
-### v0.2.0
-- Replaced the experimental Auto-Builder and Auto-Fab with proper multi-tile **Auto Optronics Fabricator** (mid 7800001) and **Auto Advanced Assembler** (mid 7800002) cloning the actual vanilla composites.
-- Added new text IDs (7800101-7800106) with full EN + CN localization.
-- Auto Greenhouse now shows up under its own name instead of "Algae Kitchen".
-
-### v0.1.0
-- Initial scaffold: Auto-Builder (Tool Gen clone), Auto-Fab (Weaver clone), Auto-Greenhouse (Algae Kitchen clone). Single-tile, reused vanilla text IDs.
+[drones_plus](https://github.com/mingchen3563/drones_plus) — Phase 1 successfully tuned existing player bot stations (passive-class facilities). Phase 2 (new bot AI) was abandoned for the same crew-gate reason.
 
 ## License
 
 MIT.
-
-## Credits
-
-- [spacehaven-modloader](https://github.com/Spacehaven-modding-tools/spacehaven-modloader) team for the patch system.
-- Bugbyte for Space Haven.

@@ -1,17 +1,16 @@
 <mod>
-	<name>Automated Buildings</name>
+	<name>Automated Buildings (abandoned)</name>
 	<description>
-		<![CDATA[Three passive production modules that run without crew. Power and input items go in, finished output comes out. Logistic bots haul I/O automatically.
+		<![CDATA[Abandoned experiment in automating crew-required Space Haven facilities via pure XML.
 
-Modules:
-- Auto Optronics Fabricator — autonomous version of the vanilla Optronics Fabricator. Produces optronic components and energy cells.
-- Auto Advanced Assembler — autonomous version of the vanilla Advanced Assembler. Produces tech blocks and energy blocks.
-- Auto Grow Bed — autonomous grow bed. Consumes water + fertilizer. Player picks one crop per bed (root vegetables, fruits, grains and hops, or nuts and seeds).
+This mod is empty as of v0.5.0. See README.md for the post-mortem on what was tried and why it doesn't work.
 
-All three use the vanilla `<produces>` + `<stateWatchdog autoproduce="true">` pattern. No Java, no AI — just data. Names localized for EN + CN; other languages fall back to EN.]]>
+TL;DR: Vanilla Space Haven hardcodes crew interaction for the Optronics Fabricator, Advanced Assembler, and Grow Bed. XML flags like `autoproduce="true"` and `produceInNormal="true"` are not enough to bypass the Java-side gate — the production tick never fires without a crew member completing the work loop. Real automation here requires AspectJ code injection (the same conclusion drones_plus Phase 2 reached).
+
+The repo is kept as a documented dead-end so future modders don't redo the experiment from scratch.]]>
 	</description>
 	<minimumLoaderVersion>0.12.1</minimumLoaderVersion>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 	<author>mingc</author>
 	<modid>7800001</modid>
 	<config></config>
